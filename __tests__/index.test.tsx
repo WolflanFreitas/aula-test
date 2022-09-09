@@ -1,14 +1,32 @@
-import { render, screen } from '@testing-library/react'
 import Home from '@/pages/index'
 
-describe('Home', () => {
-  it('renders a heading', () => {
-    render(<Home />)
+const capitalize = (text: string) => {
+  if (text.length === 0)
+    return "";
 
-    const heading = screen.getByRole('heading', {
-      name: /welcome to next\.js!/i,
-    })
+  const words = text.split(" ");
 
-    expect(heading).toBeInTheDocument()
+  const caplizeWord = (text: string) => {
+    const firstLetter = text[0].toUpperCase();
+    const othersLetters = text.substring(1);
+
+    return `${firstLetter}${othersLetters}`;
+  }
+
+  return words.map((word) => caplizeWord(word)).join(" ");
+};
+
+describe("Sanity of formatter", () => {
+
+  test("Should do nothing for empty entry", () => {
+    expect(capitalize("")).toBe("");
+  })
+
+  test("Should return Teste for teste", () => {
+    expect(capitalize("teste")).toBe("Teste");
+  })
+
+  test("Should return Teste Teste for teste teste", () => {
+    expect(capitalize("teste teste")).toBe("Teste Teste");
   })
 })
